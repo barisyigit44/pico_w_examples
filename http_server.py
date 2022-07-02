@@ -11,13 +11,9 @@ wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
 wlan.connect(ssid, password)
 
-html = """<!DOCTYPE html>
-<html>
-    <head> <title>Pico W</title> </head>
-    <body> <h1>Pico W</h1>
-        <p>Hello World</p>
-    </body>
-</html>
+response = """{
+"success": "true"
+}
 """
 
 max_wait = 10
@@ -56,7 +52,7 @@ while True:
             if not line or line == b'\r\n':
                 break
         response = html
-        cl.send('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
+        cl.send('HTTP/1.0 200 OK\r\nContent-type: application/json\r\n\r\n')
         cl.send(response)
         cl.close()
     except OSError as e:
